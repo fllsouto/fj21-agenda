@@ -13,10 +13,19 @@
   
   <servlet-mapping>
   	<servlet-name>horarioServidor</servlet-name>
-  	<url-pattern>/banana</url-pattern>
+  	<url-pattern>/horario</url-pattern>
   </servlet-mapping>
   <servlet>
   	<servlet-name>horarioServidor</servlet-name>
-  	<servlet-class>br.com.caelum.agenda.servlet.HorarioServidorServlet</servlet-class>
+  	<servlet-class>br.com.caelum.servlet.HorarioServidorServlet</servlet-class>
+  </servlet>
+  
+    <servlet-mapping>
+  	<servlet-name>OiMundo</servlet-name>
+  	<url-pattern>/oi</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>OiMundo</servlet-name>
+  	<servlet-class>br.com.caelum.servlet.OiMundoServlet</servlet-class>
   </servlet>
 </web-app>
