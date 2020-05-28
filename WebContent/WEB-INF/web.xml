@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>fj21-agenda</display-name>
+
   <welcome-file-list>
     <welcome-file>bomDia.html</welcome-file>
     <welcome-file>index.html</welcome-file>
@@ -17,7 +18,7 @@
   </servlet-mapping>
   <servlet>
   	<servlet-name>horarioServidor</servlet-name>
-  	<servlet-class>br.com.caelum.servlet.HorarioServidorServlet</servlet-class>
+ 	<servlet-class>br.com.caelum.agenda.servlet.HorarioServidorServlet</servlet-class>
   </servlet>
   
     <servlet-mapping>
@@ -26,6 +27,11 @@
   </servlet-mapping>
   <servlet>
   	<servlet-name>OiMundo</servlet-name>
-  	<servlet-class>br.com.caelum.servlet.OiMundoServlet</servlet-class>
+ 	<servlet-class>br.com.caelum.agenda.servlet.OiMundoServlet</servlet-class>
   </servlet>
+  
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/404.html</location>
+  </error-page>
 </web-app>
