@@ -36,8 +36,8 @@ th {
 			<th>Data de nascimento</th>
 		</tr>
 		<!-- percorre contatos montando as linhas da tabela -->
-		<c:forEach var="contato" items="${dao.lista}">
-			<tr>
+		<c:forEach var="contato" items="${dao.lista}" varStatus="id">
+			<tr bgcolor="#${id.count % 2 == 0 ? 'ffffff' : 'c9c8c3' }" >
 				<td>${contato.nome}</td>
 				<td>${contato.email}</td>
 				<td>${contato.endereco}</td>
