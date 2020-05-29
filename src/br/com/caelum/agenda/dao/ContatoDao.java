@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import br.com.caelum.agenda.ConnectionFactory;
 import br.com.caelum.agenda.modelo.Contato;
@@ -25,6 +26,24 @@ public class ContatoDao {
 
 	public ContatoDao(Connection connection) {
 		this.connection = connection;
+	}
+	
+	public Contato buscaPorId(Long id) {
+		try {
+			String sql = "select * from contatos where id = (?)";
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setLong(1, id);
+			ResultSet rs = stmt.executeQuery();
+			
+			Contato contato = extractContatoIfExists(rs).orElseThrow();
+			stmt.close();
+			rs.close();
+
+			return contato;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void adiciona(Contato contato) {
@@ -102,5 +121,30 @@ public class ContatoDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	private Optional<Contato> extractContatoIfExists(ResultSet rs) throws SQLException {
+		if (rs.next()) {
+			Contato contato = extractContato(rs);
+			return Optional.ofNullable(contato);
+		} else {
+			return Optional.ofNullable(null);
+		}
+	}
+
+	private Contato extractContato(ResultSet rs) throws SQLException {
+		Contato contato = new Contato();
+
+		// criando o objeto Contato
+		contato.setId(rs.getLong("id"));
+		contato.setNome(rs.getString("nome"));
+		contato.setEmail(rs.getString("email"));
+		contato.setEndereco(rs.getString("endereco"));
+
+		// monstando a data através do Calendar
+		Calendar data = Calendar.getInstance();
+		data.setTime(rs.getDate("dataNascimento"));
+		contato.setDataNascimento(data);
+		return contato;
 	}
 }

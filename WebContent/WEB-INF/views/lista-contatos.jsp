@@ -26,7 +26,7 @@ th {
 </style>
 </head>
 <body>
-	<c:import url="cabecalho.jsp" />
+	<c:import url="/cabecalho.jsp" />
 
 	<!-- cria o DAO -->
 	<table>
@@ -35,7 +35,9 @@ th {
 			<th>Email</th>
 			<th>Endereço</th>
 			<th>Data de nascimento</th>
-			<th>Ação</th>
+			<th>Ação 1</th>
+			<th>Ação 2</th>
+			<th>Ação 3</th>
 		</tr>
 		<!-- percorre contatos montando as linhas da tabela -->
 		<c:forEach var="contato" items="${contatos}" varStatus="id">
@@ -55,9 +57,18 @@ th {
 				<td>
 					<a href="mvc?logica=RemoveContatoLogica&id=${contato.id}">Remover</a>
 				</td>
+				<td>
+					<a href="mvc?logica=AlteraContatoFormLogica&id=${contato.id}">Alterar</a>
+				</td>
+				<td>
+					<a href="mvc?logica=AdicionaAlteraContatoFormLogica&id=${contato.id}">Alterar</a>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>
-	<c:import url="rodape.jsp" />
+	<p><a href="mvc?logica=AdicionaContatoFormLogica">Adicionar novo Contato ...</a></p>
+	<p><a href="mvc?logica=AdicionaAlteraContatoFormLogica">Adicionar V2 novo Contato ...</a></p>
+	<c:import url="/rodape.jsp" />
 </body>
 </html>
+
