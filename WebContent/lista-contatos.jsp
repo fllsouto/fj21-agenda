@@ -37,6 +37,7 @@ th {
 			<th>Email</th>
 			<th>Endereço</th>
 			<th>Data de nascimento</th>
+			<th>Ação</th>
 		</tr>
 		<!-- percorre contatos montando as linhas da tabela -->
 		<c:forEach var="contato" items="${dao.lista}" varStatus="id">
@@ -52,6 +53,9 @@ th {
 				<td>${contato.endereco}</td>
 				<td>
 					<fmt:formatDate value="${contato.dataNascimento.time}" pattern="dd/MM/yyyy" />
+				</td>
+				<td>
+					<a href="mvc?logica=RemoveContatoLogica&id=${contato.id}">Remover</a>
 				</td>
 			</tr>
 		</c:forEach>
