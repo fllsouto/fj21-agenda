@@ -1,5 +1,6 @@
 package br.com.caelum.agenda.mvc.logica;
 
+import java.sql.Connection;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -13,18 +14,21 @@ public class AdicionaAlteraContatoFormLogica implements Logica {
 
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Optional<String> idOpcional = Optional.ofNullable(request.getParameter("id"));
 		
-		Contato contato = pegaContato(idOpcional);
+		Contato contato = pegaContato(request);
 		
 		request.setAttribute("contato", contato);
 		
 		return "/WEB-INF/views/adiciona-altera-contato.jsp";
 	}
 
-	private Contato pegaContato(Optional<String> idOpcional) {
+	private Contato pegaContato(HttpServletRequest request) {
+		Optional<String> idOpcional = Optional.ofNullable(request.getParameter("id"));
+		
+		
 		if (idOpcional.isPresent()) {
-			ContatoDao dao = new ContatoDao();
+			Connection connection = (Connection) request.getAttribute("conexao");
+			ContatoDao dao = new ContatoDao(connection);
 			return dao.buscaPorId(Long.parseLong(idOpcional.get()));
 		} else {
 			Contato contato = new Contato();

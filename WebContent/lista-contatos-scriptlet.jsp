@@ -39,7 +39,7 @@
 			<th>Data de nascimento</th>
 		</tr>
 		<%
-			ContatoDao dao = new ContatoDao();
+		ContatoDao dao = new ContatoDao();
 		List<Contato> contatos = dao.getLista();
 
 		for (Contato contato : contatos) {

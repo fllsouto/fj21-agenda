@@ -1,5 +1,6 @@
 package br.com.caelum.agenda.mvc.logica;
 
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,13 +18,15 @@ public class AdicionaAlteraContatoLogica implements Logica {
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Optional<String> idOpcional = Optional.ofNullable(request.getParameter("id"));
-		
+		Connection connection = (Connection) request.getAttribute("conexao");
+		ContatoDao dao = new ContatoDao(connection);
+
 		Contato contato = extraiPreparaContato(request);
 				
 		if (idOpcional.isPresent()) {
-			return atualizaContato(idOpcional.get(), contato);
+			return atualizaContato(idOpcional.get(), contato, dao);
 		} else {
-			return criaContato(contato);
+			return criaContato(contato, dao);
 		}
 	}
 
@@ -47,17 +50,15 @@ public class AdicionaAlteraContatoLogica implements Logica {
 		return contato;
 	}
 	
-	private String atualizaContato(String id, Contato contato) {
+	private String atualizaContato(String id, Contato contato, ContatoDao dao) {
 		long idConvertido = Long.parseLong(id);
 		contato.setId(idConvertido);
 		
-		ContatoDao dao = new ContatoDao();
 		dao.atualiza(contato);
 		return "mvc?logica=ListaContatosLogica";
 	}
 	
-	private String criaContato(Contato contato) {
-		ContatoDao dao = new ContatoDao();
+	private String criaContato(Contato contato, ContatoDao dao) {
 		dao.adiciona(contato);
 		return "/WEB-INF/views/contato-adicionado.jsp";
 	}

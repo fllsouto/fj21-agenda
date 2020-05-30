@@ -1,5 +1,7 @@
 package br.com.caelum.agenda.mvc.logica;
 
+import java.sql.Connection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,7 +14,8 @@ public class AlteraContatoFormLogica implements Logica {
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		long id = Long.parseLong(request.getParameter("id"));
-		ContatoDao dao = new ContatoDao();
+		Connection connection = (Connection) request.getAttribute("conexao");
+		ContatoDao dao = new ContatoDao(connection);
 		Contato contato = dao.buscaPorId(id);
 		
 		request.setAttribute("contato", contato);
